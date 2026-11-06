@@ -1,0 +1,19 @@
+# Render Blueprint: https://render.com/docs/blueprint-spec
+# Data lives in Supabase (see README); the instance disk is only used for code.
+services:
+  - type: web
+    name: financas-condominio
+    runtime: python
+    plan: free
+    region: virginia # closest Render region to Brazil; put the Supabase project in us-east-1 too
+    buildCommand: pip install poetry==1.8.5 && poetry install --only main --no-interaction
+    # secrets.toml is uploaded as a Render Secret File (never committed); Streamlit
+    # reads it from .streamlit/.
+    startCommand: >-
+      mkdir -p .streamlit && cp /etc/secrets/secrets.toml .streamlit/secrets.toml &&
+      .venv/bin/streamlit run app.py --server.port $PORT --server.address 0.0.0.0
+      --server.headless true
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"

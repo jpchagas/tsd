@@ -1,0 +1,28 @@
+[tool.poetry]
+name = "financas-condominio"
+version = "0.1.0"
+description = "Dashboard Streamlit com as finanças do condomínio"
+authors = ["jpchagas <jpchagas@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+streamlit = "^1.50"
+pandas = "^2.0"
+openpyxl = "^3.1"
+altair = ">=5,<7"
+requests = "^2.31"
+toml = "^0.10"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+filterwarnings = ["ignore:Workbook contains no default style:UserWarning"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
